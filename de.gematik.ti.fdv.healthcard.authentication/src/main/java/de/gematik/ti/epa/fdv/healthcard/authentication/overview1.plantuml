@@ -1,0 +1,61 @@
+@startuml
+
+  namespace de.gematik.ti.epa.fdv.healthcard.authentication {
+    class de.gematik.ti.epa.fdv.healthcard.authentication.AuthenticationController {
+        {static} - LOG : Logger
+        - healthCard : IHealthCard
+        + getCertificateHolder()
+        + handleCardAbsentEvents()
+        + handleCardPresentEvents()
+        + start()
+        + stop()
+        - getHealthCard()
+    }
+
+    class de.gematik.ti.epa.fdv.healthcard.authentication.Authenticator {
+            {static} - LOG : Logger
+            + Authenticator()
+            + authenticate()
+            + getCertificateValue()
+            + getController()
+            + getName()
+            + signData()
+            - getAuthState()
+            - validatePinResult()
+    }
+
+    namespace healthcard {
+          class de.gematik.ti.epa.fdv.healthcard.authentication.healthcard.AuthenticationProvider {
+              + getDefaultAuthenticator()
+              + getDescription()
+           }
+
+           class de.gematik.ti.epa.fdv.healthcard.authentication.healthcard.EgkCertificateLoader {
+                     {static} - LOG : Logger
+                     + loadCertificate()
+                     - getAppIdToSelect()
+                     - getFidToReadCertificate()
+          }
+
+          class de.gematik.ti.epa.fdv.healthcard.authentication.healthcard.EgkHashSigner {
+                    {static} - PSO_ALGO_SIGN_ECDSA : PsoAlgorithm
+                    {static} - PSO_ALGO_SIGN_PSS : PsoAlgorithm
+                    + signHashvalue()
+                    - getAppIdToSelect()
+                    - getKey()
+                    - getPsoSignAlgorithm()
+          }
+
+    }
+
+
+  }
+
+  de.gematik.ti.epa.fdv.healthcard.authentication.healthcard.AuthenticationProvider .up.|> de.gematik.ti.epa.fdv.authentication.service.provider.spi.IAuthenticationProvider
+
+
+  de.gematik.ti.epa.fdv.healthcard.authentication.Authenticator .up.|> de.gematik.ti.epa.fdv.authentication.service.provider.api.IAuthenticator
+  de.gematik.ti.epa.fdv.healthcard.authentication.Authenticator o-- de.gematik.ti.epa.fdv.healthcard.authentication.AuthenticationController : authenticationController
+
+
+@enduml

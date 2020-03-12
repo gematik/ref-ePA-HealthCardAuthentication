@@ -1,0 +1,8 @@
+include::config.adoc[]
+
+= HealthCardAuthentication API
+
+include::HCAUTHN_Introduction.adoc[]
+include::HCAUTHN_License.adoc[]
+include::HCAUTHN_Overview.adoc[]
+include::HCAUTHN_GettingStarted.adoc[]

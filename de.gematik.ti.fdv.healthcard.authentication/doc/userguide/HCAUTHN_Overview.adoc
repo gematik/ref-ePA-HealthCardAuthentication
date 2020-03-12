@@ -1,0 +1,43 @@
+include::config.adoc[]
+
+== Overview
+
+This library provides methods for authenticating the insured using his health card (eGK).
+
+
+ifndef::useCachePlantuml[]
+
+.HealthCardAuthentication Overview
+[plantuml,HCAUTHN/generated/overview1,png,caption="{classdia-caption} {counter:class}: ",650]
+
+----
+include::{plantumldir}/HCAUTHN/overview1.plantuml[]
+----
+
+endif::useCachePlantuml[]
+ifdef::useCachePlantuml[]
+
+.HealthCardAuthentication Overview
+image::HCAUTHN/generated/overview1.png[caption="{classdia-caption} {counter:class}: "]
+
+{empty} +
+
+endif::useCachePlantuml[]
+
+=== Authenticator
+
+The Authenticator class implements the IAuthenticator<T> interface which provides functionalities 'getCertificateValue' and 'signData'.
+Owner of the certificate (certificate holder) is in this case the health card (eGK).
+The certificate as a byte array can be achieved with 'getCertificateValue' from the health card.
+A hashValue of byte-array can be signed by 'signData' which result will be returned back as 'AuthenticationResult'.
+
+=== AuthenticationController
+
+The AuthenticationController class handles card events and returns the recognized health card as the certificate holder.
+
+=== Solution with health card (eGK)
+
+A eGK of generation 2.0 or 2.1 should be used in this solution.
+The certificate for eGK G2.0 is 'C_CH_AUT_R2048', whereas for eGK G2.1 it is then 'C_CH_AUT_E256'.
+Details about signing are available in "gemSpec_Frontend_Vers" of ePA.
+
